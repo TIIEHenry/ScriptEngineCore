@@ -2,27 +2,28 @@ package tiiehenry.script.engine.internal
 
 import tiiehenry.script.engine.framework.ScriptEngine
 
-interface Printable<T : ScriptEngine> :Loggable<T>{
+interface Printable<T : ScriptEngine> : Loggable<T> {
+
 
     fun printi(a: Any?) {
         printf(a)
-        logi(a.toString())
+        logi(engine.varBridge.toString(a))
     }
 
 
     fun printd(a: Any?) {
         printf(a)
-        logd(a.toString())
+        logd(engine.varBridge.toString(a))
     }
 
     fun printw(a: Any?) {
         printf(a)
-        logw(a.toString())
+        logw(engine.varBridge.toString(a))
     }
 
     fun printe(a: Any?) {
         printf(a)
-        loge(a.toString())
+        loge(engine.varBridge.toString(a))
     }
 
     fun printf(a: Any?) {
@@ -30,7 +31,7 @@ interface Printable<T : ScriptEngine> :Loggable<T>{
     }
 
     fun print(a: Any?) {
-        engine.scriptContext.notifyShowToast(a.toString())
+        engine.scriptContext.notifyPrint(a.toString())
     }
 
     //res

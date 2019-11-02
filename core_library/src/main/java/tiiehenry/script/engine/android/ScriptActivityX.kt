@@ -5,27 +5,33 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import tiiehenry.script.engine.framework.ScriptEngine
 import tiiehenry.script.engine.framework.ScriptProvider
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-abstract class ScriptActivityX<A: Activity,T: ScriptEngine>: AppCompatActivity(), ScriptContextActivity<A, T> {
-    override val mainHandler: Handler = ScriptMainHandler(this)
+abstract class ScriptActivityX<A : Activity, T : ScriptEngine> : AppCompatActivity(), ScriptContextActivity<A, T> {
+    override val TAG: String = "ScriptActivityX"
+    override val mainHandler: Handler by lazy { ScriptMainHandler(this) }
     override val toastbuilder: StringBuilder = StringBuilder()
     override var lastShow: Long = 0
+    override val logTextBuilder: StringBuilder = StringBuilder()
+    override val printTextView: TextView by lazy { TextView(this) }
+    override val printDataFormatter: SimpleDateFormat=SimpleDateFormat("HH:mm:ss", Locale.getDefault())//设置日期格式
 
-
-    override val scriptProvider= ScriptProvider(this)
+    override val scriptProvider by lazy { ScriptProvider(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         onCreateBeforeSuper(savedInstanceState)
         super.onCreate(savedInstanceState)
+        onCreateAfterSuper(savedInstanceState)
         engine.apply {
-            init("main")
+            init(TAG)
             onEngineInited()
         }
-        onCreateAfterSuper(savedInstanceState)
     }
 
 

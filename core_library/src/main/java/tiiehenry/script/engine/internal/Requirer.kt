@@ -2,6 +2,7 @@ package tiiehenry.script.engine.internal
 
 import tiiehenry.script.engine.framework.ScriptEngine
 import java.io.File
+import java.io.FileNotFoundException
 
 
 //require 返回保存状态，load 每次都加载
@@ -44,7 +45,7 @@ open class Requirer(private val engine: ScriptEngine) {
                     if (file != null) {
                         requireFile(file)
                     } else {
-                        throw Exception("can not find：$name")
+                        throw FileNotFoundException("can not find：$name")
                     }
                 }
             }
