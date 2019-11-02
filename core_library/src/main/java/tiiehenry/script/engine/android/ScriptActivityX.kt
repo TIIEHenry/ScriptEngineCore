@@ -14,7 +14,7 @@ import java.util.*
 
 
 abstract class ScriptActivityX<A : Activity, T : ScriptEngine> : AppCompatActivity(), ScriptContextActivity<A, T> {
-    override val TAG: String = "ScriptActivityX"
+    override val TAG: String = ScriptActivityX::class.name
     override val mainHandler: Handler by lazy { ScriptMainHandler(this) }
     override val toastbuilder: StringBuilder = StringBuilder()
     override var lastShow: Long = 0

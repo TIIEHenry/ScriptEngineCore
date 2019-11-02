@@ -19,201 +19,208 @@ import java.net.URLDecoder
 
 interface ScriptContext<T : ScriptEngine> {
 
-    val TAG:String
+	val TAG: String
 
-    var engine: T
+	var engine: T
 
-    val scriptProvider: ScriptProvider<T>
+	val scriptProvider: ScriptProvider<T>
 
 
-    val mainHandler: Handler
-    val toastbuilder: StringBuilder
-    val logTextBuilder: StringBuilder
+	val mainHandler: Handler
+	val toastbuilder: StringBuilder
+	val logTextBuilder: StringBuilder
 
-    var lastShow: Long
+	var lastShow: Long
 
-    fun getContext(): Context
+	fun getContext(): Context
 
-    fun newScriptEngine(): T
+	fun newScriptEngine(): T
 
-    fun getScriptEngine(): T {
-        return engine
-    }
+	fun getScriptEngine(): T {
+		return engine
+	}
 
-    fun initJsContext() {
-    }
+	fun initJsContext() {
+	}
 
-    fun onEngineInited() {
+	fun onEngineInited() {
 //        engine.
 //        engine.putVar("context", getContext())
 
-    }
+	}
 
-    //null engine
-    fun onCreateBeforeSuper(savedInstanceState: Bundle?) {
-        resetPolicy()
-        initJsContext()
-    }
+	//null engine
+	fun onCreateBeforeSuper(savedInstanceState: Bundle?) {
+		resetPolicy()
+		initJsContext()
+	}
 
-    //engine inited but not eval
-    fun onCreateAfterSuper(savedInstanceState: Bundle?) {
+	//engine inited but not eval
+	fun onCreateAfterSuper(savedInstanceState: Bundle?) {
 
-    }
+	}
+
+	fun loadDex(path: String) {
+		engine.dexLoader.loadDex(File(path))
+	}
+
+	fun loadDexFile(file: File) {
+		engine.dexLoader.loadDex(file)
+	}
+
+	fun processIntent(it: Intent) {
+		processWithExtraBefore(it)
+		when {
+			!it.dataString.isNullOrEmpty() ->
+				processWithDataString(it.dataString!!)
+			it.data != null ->
+				processWithData(it.data!!)
+		}
+		processWithExtraAfter(it)
+	}
+
+	fun processWithExtraBefore(it: Intent) {
+		it.getStringExtra("scriptBefore")?.let {
+			engine.stringEvaler.evalString(it, "scriptBefore")
+		}
+	}
+
+	fun processWithExtraAfter(it: Intent) {
+		it.getStringExtra("scriptAfter")?.let {
+			engine.stringEvaler.evalString(it, "scriptAfter")
+		}
+	}
+
+	fun processWithDataString(dataString: String) {
+		processWithPath(dataString)
+	}
+
+	fun processWithData(data: Uri) {
+		val path = data.path
+		path?.let { processWithPath(it) }
+	}
+
+	fun processWithPath(path: String) {
+		when {
+			path.startsWith("file:///android_asset/") -> {
+				val s = path.replace("file:///android_asset/", "")
+				val code = getContext().assets.open(s).use {
+					it.bufferedReader().readText()
+				}
+				engine.stringEvaler.evalString(code)
+			}
+			path.startsWith("file:") -> {
+				val pathed = URLDecoder.decode(path, "utf-8")
+						.replace("file:///", "/").replace("file:/", "/")
+				engine.requirer.require(pathed)
+			}
+			File(path).isFile -> {
+				engine.requirer.require(path)
+			}
+		}
+	}
 
 
-    fun processIntent(it: Intent) {
-        processWithExtraBefore(it)
-        when {
-            !it.dataString.isNullOrEmpty() ->
-                processWithDataString(it.dataString!!)
-            it.data != null ->
-                processWithData(it.data!!)
-        }
-        processWithExtraAfter(it)
-    }
+	fun toast(id: Int) {
+		notifyShowToast(getContext().getString(id))
+	}
 
-    fun processWithExtraBefore(it: Intent) {
-        it.getStringExtra("scriptBefore")?.let {
-            engine.stringEvaler.evalString(it, "scriptBefore")
-        }
-    }
+	fun toast(a: Any) {
+		notifyShowToast(a.toString())
+	}
 
-    fun processWithExtraAfter(it: Intent) {
-        it.getStringExtra("scriptAfter")?.let {
-            engine.stringEvaler.evalString(it, "scriptAfter")
-        }
-    }
+	/* fun printi(id: Int) {
+		 notifyShowToast(getContext().getString(id))
+		 logi("js", getContext().getString(id))
+	 }
 
-    fun processWithDataString(dataString: String) {
-        processWithPath(dataString)
-    }
+	 fun printi(a: Any?) {
+		 notifyShowToast(a.toString())
+		 logi("js", a.toString())
+	 }
 
-    fun processWithData(data: Uri) {
-        val path = data.path
-        path?.let { processWithPath(it) }
-    }
+	 fun printe(id: Int) {
+		 notifyShowToast(getContext().getString(id))
+		 loge("js", getContext().getString(id))
+	 }
 
-    fun processWithPath(path: String) {
-        when {
-            path.startsWith("file:///android_asset/") -> {
-                val s = path.replace("file:///android_asset/", "")
-                val code = getContext().assets.open(s).use {
-                    it.bufferedReader().readText()
-                }
-                engine.stringEvaler.evalString(code)
-            }
-            path.startsWith("file:") -> {
-                val pathed = URLDecoder.decode(path, "utf-8")
-                        .replace("file:///", "/").replace("file:/", "/")
-                engine.requirer.require(pathed)
-            }
-            File(path).isFile -> {
-                engine.requirer.require(path)
-            }
-        }
-    }
-
-
-    fun toast(id: Int) {
-        notifyShowToast(getContext().getString(id))
-    }
-
-    fun toast(a: Any) {
-        notifyShowToast(a.toString())
-    }
-
-    /* fun printi(id: Int) {
-         notifyShowToast(getContext().getString(id))
-         logi("js", getContext().getString(id))
-     }
-
-     fun printi(a: Any?) {
-         notifyShowToast(a.toString())
-         logi("js", a.toString())
-     }
-
-     fun printe(id: Int) {
-         notifyShowToast(getContext().getString(id))
-         loge("js", getContext().getString(id))
-     }
-
-     fun printe(a: Any?) {
-         notifyShowToast(a.toString())
-         loge("js", a.toString())
-     }
+	 fun printe(a: Any?) {
+		 notifyShowToast(a.toString())
+		 loge("js", a.toString())
+	 }
 
  */
-    fun toast(text: String) {
-        val now = System.currentTimeMillis()
-        if (now - lastShow > 1000) {
-            toastbuilder.setLength(0)
-            toastbuilder.append(text)
-        } else {
-            toastbuilder.append("\n")
-            toastbuilder.append(text)
-        }
-        lastShow = now
-        Toast.makeText(getContext(), toastbuilder.toString(), Toast.LENGTH_LONG).show()
-    }
+	fun toast(text: String) {
+		val now = System.currentTimeMillis()
+		if (now - lastShow > 1000) {
+			toastbuilder.setLength(0)
+			toastbuilder.append(text)
+		} else {
+			toastbuilder.append("\n")
+			toastbuilder.append(text)
+		}
+		lastShow = now
+		Toast.makeText(getContext(), toastbuilder.toString(), Toast.LENGTH_LONG).show()
+	}
 
-    fun notifyShowToast(text: String) {
-        val m = Message().apply {
-            what = ScriptMainHandler.TOAST
-            obj = text
-        }
-        mainHandler.sendMessage(m)
-    }
+	fun notifyShowToast(text: String) {
+		val m = Message().apply {
+			what = ScriptMainHandler.TOAST
+			obj = text
+		}
+		mainHandler.sendMessage(m)
+	}
 
-    fun log(text: String) {
-        Log.i(TAG, text)
-    }
+	fun log(text: String) {
+		Log.i(TAG, text)
+	}
 
-    fun notifyLog(text: String) {
-        val m = Message().apply {
-            what = ScriptMainHandler.LOG
-            obj = text
-        }
-        mainHandler.sendMessage(m)
-    }
+	fun notifyLog(text: String) {
+		val m = Message().apply {
+			what = ScriptMainHandler.LOG
+			obj = text
+		}
+		mainHandler.sendMessage(m)
+	}
 
-    fun print(text: String) {
-        Log.i(TAG, text)
-        toast(text)
-    }
+	fun print(text: String) {
+		Log.i(TAG, text)
+		toast(text)
+	}
 
-    fun notifyPrint(text: String) {
-        val m = Message().apply {
-            what = ScriptMainHandler.PRINT
-            obj = text
-        }
-        mainHandler.sendMessage(m)
-    }
+	fun notifyPrint(text: String) {
+		val m = Message().apply {
+			what = ScriptMainHandler.PRINT
+			obj = text
+		}
+		mainHandler.sendMessage(m)
+	}
 
 //    fun getString(id: Int): String
 
-    fun getAttrColor(id: Int): Int {
-        val typedValue = TypedValue()
-        getContext().theme.resolveAttribute(id, typedValue, true)
-        return typedValue.data
-    }
+	fun getAttrColor(id: Int): Int {
+		val typedValue = TypedValue()
+		getContext().theme.resolveAttribute(id, typedValue, true)
+		return typedValue.data
+	}
 
-    fun getWidth(): Int {
-        val wm = getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val outMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(outMetrics)
-        return outMetrics.widthPixels
-    }
+	fun getWidth(): Int {
+		val wm = getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+		val outMetrics = DisplayMetrics()
+		wm.defaultDisplay.getMetrics(outMetrics)
+		return outMetrics.widthPixels
+	}
 
-    fun getHeight(): Int {
-        val wm = getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val outMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(outMetrics)
-        return outMetrics.heightPixels
-    }
+	fun getHeight(): Int {
+		val wm = getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+		val outMetrics = DisplayMetrics()
+		wm.defaultDisplay.getMetrics(outMetrics)
+		return outMetrics.heightPixels
+	}
 
-    private fun resetPolicy() {
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
-        val builder = StrictMode.VmPolicy.Builder()
-        StrictMode.setVmPolicy(builder.build())//绕过provider
-    }
+	private fun resetPolicy() {
+		StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
+		val builder = StrictMode.VmPolicy.Builder()
+		StrictMode.setVmPolicy(builder.build())//绕过provider
+	}
 }
