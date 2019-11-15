@@ -60,12 +60,12 @@ interface ScriptContext<T : ScriptEngine> {
 
 	}
 
-	fun loadDex(path: String) {
-		engine.dexLoader.loadDex(File(path))
+	fun loadDex(path: String): ScriptDexClassLoader? {
+		return engine.dexLoader.loadDexFile(File(path))
 	}
 
-	fun loadDexFile(file: File) {
-		engine.dexLoader.loadDex(file)
+	fun loadDexFile(file: File): ScriptDexClassLoader? {
+		return engine.dexLoader.loadDexFile(file)
 	}
 
 	fun processIntent(it: Intent) {

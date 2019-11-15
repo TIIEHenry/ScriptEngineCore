@@ -14,7 +14,7 @@ import java.util.*
 
 
 abstract class ScriptActivityX<A : Activity, T : ScriptEngine> : AppCompatActivity(), ScriptContextActivity<A, T> {
-    override val TAG: String = ScriptActivityX::class.name
+    override val TAG: String = ScriptActivityX::class.toString()
     override val mainHandler: Handler by lazy { ScriptMainHandler(this) }
     override val toastbuilder: StringBuilder = StringBuilder()
     override var lastShow: Long = 0
@@ -27,11 +27,11 @@ abstract class ScriptActivityX<A : Activity, T : ScriptEngine> : AppCompatActivi
     override fun onCreate(savedInstanceState: Bundle?) {
         onCreateBeforeSuper(savedInstanceState)
         super.onCreate(savedInstanceState)
-        onCreateAfterSuper(savedInstanceState)
         engine.apply {
             init(TAG)
             onEngineInited()
         }
+        onCreateAfterSuper(savedInstanceState)
     }
 
 

@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), ScriptContextActivity<A, T> {
-    override val TAG: String = "ScriptActivity"
+    override val TAG: String =  ScriptActivity::class.toString()
     override val mainHandler: Handler by lazy { ScriptMainHandler(this) }
     override val toastbuilder: StringBuilder = StringBuilder()
     override var lastShow: Long = 0
@@ -25,11 +25,11 @@ abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), Scri
     override fun onCreate(savedInstanceState: Bundle?) {
         onCreateBeforeSuper(savedInstanceState)
         super.onCreate(savedInstanceState)
-        onCreateAfterSuper(savedInstanceState)
         engine.apply {
             init(TAG)
             onEngineInited()
         }
+        onCreateAfterSuper(savedInstanceState)
     }
 
     override fun toast(text: String) {
