@@ -198,11 +198,6 @@ interface ScriptContext<T : ScriptEngine> {
 
 //    fun getString(id: Int): String
 
-	fun getAttrColor(id: Int): Int {
-		val typedValue = TypedValue()
-		getContext().theme.resolveAttribute(id, typedValue, true)
-		return typedValue.data
-	}
 
 	fun getWidth(): Int {
 		val wm = getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
