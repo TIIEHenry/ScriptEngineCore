@@ -13,7 +13,7 @@ import java.util.*
 
 abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), ScriptContextActivity<A, T> {
     override val TAG: String =  ScriptActivity::class.toString()
-    override val mainHandler: Handler by lazy { ScriptMainHandler(this) }
+    override lateinit var mainHandler: Handler
     override val toastbuilder: StringBuilder = StringBuilder()
     override var lastShow: Long = 0
     override val logTextBuilder: StringBuilder = StringBuilder()
@@ -23,6 +23,7 @@ abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), Scri
     override val scriptProvider by lazy { ScriptProvider(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        mainHandler=ScriptMainHandler(this)
         onCreateBeforeSuper(savedInstanceState)
         super.onCreate(savedInstanceState)
         engine.apply {
