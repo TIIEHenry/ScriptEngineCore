@@ -10,7 +10,7 @@ abstract class ScriptEngine(final override val scriptContext: ScriptContext<*>) 
 
     override val name: String = "ScriptEngine"
 
-    override val dexLoader=ScriptDexLoader(scriptContext)
+    override val dexLoader by lazy {ScriptDexLoader(scriptContext)}
     override val requirer by lazy { Requirer(this)}
 
     override val onExceptionListener: OnExceptionListener =object : OnExceptionListener {

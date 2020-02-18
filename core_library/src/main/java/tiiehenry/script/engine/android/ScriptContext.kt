@@ -9,9 +9,9 @@ import android.os.Message
 import android.os.StrictMode
 import android.util.DisplayMetrics
 import android.util.Log
-import android.util.TypedValue
 import android.view.WindowManager
 import android.widget.Toast
+import dalvik.system.DexClassLoader
 import tiiehenry.script.engine.framework.ScriptEngine
 import tiiehenry.script.engine.framework.ScriptProvider
 import java.io.File

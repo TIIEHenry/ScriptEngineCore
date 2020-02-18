@@ -1,23 +1,27 @@
 package tiiehenry.script.engine.android
 
 import android.content.pm.PackageManager
+import dalvik.system.DexClassLoader
 import java.io.File
+import java.io.FileNotFoundException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
 
+open class ScriptDexLoader(private val scriptContext: ScriptContext<*>) : ClassLoader(scriptContext.getContext().classLoader) {
 
-class ScriptDexLoader(private val scriptContext: ScriptContext<*>) {
+    private val mDexClassLoaders = mutableListOf<DexClassLoader>()
 
-
+    @Throws(FileNotFoundException::class)
     fun loadDexFile(dexFile: File): ScriptDexClassLoader? {
-        if (!dexFile.isFile)
-            return null
+        if (!dexFile.isFile) {
+            throw FileNotFoundException(dexFile.path)
+        }
         val path = dexFile.absolutePath
         //path查找
-        var dex = scriptDexClassLoaderMap[path]
-        if (dex != null)
-            return dex
+        var loader = scriptDexClassLoaderMap[path]
+        if (loader != null)
+            return loader
         //md5查找
         dexFile.getMD5().let {
             if (it != "0") {
@@ -27,9 +31,28 @@ class ScriptDexLoader(private val scriptContext: ScriptContext<*>) {
             }
         }
         //没找到加载
-        dex = ScriptDexClassLoader(path, scriptContext.scriptProvider, scriptContext.getContext().classLoader)
-        scriptDexClassLoaderMap[path] = dex
-        return dex
+        loader = ScriptDexClassLoader(path, scriptContext.scriptProvider, parent)
+        //        val loader = DexClassLoader(file.path, scriptContext.scriptProvider.getOdexDir(), scriptContext.scriptProvider.getSoDir(), parent)
+        scriptDexClassLoaderMap[path] = loader
+        mDexClassLoaders.add(loader)
+        return loader
+    }
+
+    @Throws(ClassNotFoundException::class)
+    override fun loadClass(name: String?, resolve: Boolean): Class<*>? {
+        var loadedClass = findLoadedClass(name)
+        if (loadedClass == null) {
+            for (dex in mDexClassLoaders) {
+                loadedClass = dex.loadClass(name)
+                if (loadedClass != null) {
+                    break
+                }
+            }
+            if (loadedClass == null) {
+                loadedClass = parent.loadClass(name)
+            }
+        }
+        return loadedClass
     }
 
 
@@ -60,5 +83,4 @@ class ScriptDexLoader(private val scriptContext: ScriptContext<*>) {
         //md5
         private val scriptDexClassLoaderMap = HashMap<String, ScriptDexClassLoader>()
     }
-
 }
