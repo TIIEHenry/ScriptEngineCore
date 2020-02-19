@@ -68,7 +68,8 @@ open class Requirer(private val engine: ScriptEngine) {
     fun requireFile(file: File): Any? {
         if (requireList.contains(file.absolutePath))
             return requireMap[file.absolutePath]
-        val re = engine.stringEvaler.evalString(file.readText(), file.name)
+//        val re = engine.stringEvaler.evalString(file.readText(), file.name)
+        val re=engine.fileEvaler.evalFile(file)
         requireMap[file.absolutePath] = re
         requireList.add(file.absolutePath)
         return re
