@@ -12,7 +12,7 @@ abstract class OutputPrintStream(out: OutputStream, autoFlush: Boolean = true) :
 //        formatter= Formatter(this)
 //    }
     abstract val formatter: Formatter
-    abstract fun onPrint(s: String)
+    abstract fun onPrint(cs:CharSequence)
     abstract fun onNewLine()
 
     /* Methods that do not terminate lines */
