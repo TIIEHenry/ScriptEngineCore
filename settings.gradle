@@ -1,4 +1,4 @@
-rootProject.name = "ScriptEngineCore"
+rootProject.name = "ScriptWrapper"
 
 include ':core_library'
 

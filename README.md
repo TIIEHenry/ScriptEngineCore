@@ -1,5 +1,5 @@
-# ScriptEngineCore
-A script engine wrapper framework for android.(基于安卓的脚本引擎Wrapper框架)
+# ScriptWrapper
+A script engine wrapper framework for kotlin.(基于Kotlin的脚本引擎Wrapper框架)
 
 
     You can also use it for efficient development with script languages.(你也可以用脚本语言来进行快速开发)
@@ -28,7 +28,8 @@ ScriptEngineCore's method is to separate the various engines from the App code b
 
     Through ScriptEngineCore adaptation of the script engine can write interface, Wrapper extension method, also can directly access the engine, the engine itself has a high degree of flexibility
 
-    
+
+​    
 
 |    |  code coupling  |  flexible  |  readable  |  learning costs  |
 |  :----:  |  :----:  | :----:  |  :----:  |  :----:  |
@@ -57,12 +58,12 @@ ScriptEngineCore的方法是通过编写一个通用的中间层(Wrapper)，将�
 
 
     通过ScriptEngineCore适配的脚本引擎可以编写接口，扩展Wrapper的方法，也可以直接访问引擎，具有引擎本身高度的灵活性
-    
+
 
 |    |  代码耦合  |  灵活度  |  可读性  |  学习成本  |
 |  :----:  |  :----:  | :----:  |  :----:  |  :----:  |
 |  传统方法  | 高 |  高  |  低  |  高  |
-|  ScriptEngineCore  | 低 |  高  |  高  |  低  |
+|  ScriptWrapper  | 低 |  高  |  高  |  低  |
 
 
 
