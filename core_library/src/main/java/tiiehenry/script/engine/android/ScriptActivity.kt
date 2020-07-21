@@ -33,11 +33,6 @@ abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), Scri
         onCreateAfterSuper(savedInstanceState)
     }
 
-    override fun toast(text: String) {
-        super.toast(text)
-
-    }
-
     override fun startActivity(intent: Intent?) {
         super.startActivity(intent)
         overridePendingTransitionOpen()
@@ -45,7 +40,7 @@ abstract class ScriptActivity<A : Activity, T : ScriptEngine> : Activity(), Scri
 
     override fun onDestroy() {
         super.onDestroy()
-        engine.destory()
+        engine.destroy()
     }
 
     override fun finish() {

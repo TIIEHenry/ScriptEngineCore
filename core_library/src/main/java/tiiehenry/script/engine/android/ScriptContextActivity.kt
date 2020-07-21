@@ -58,11 +58,6 @@ interface ScriptContextActivity<T : Activity, S : ScriptEngine> : ScriptContext<
         printTextView.text = logTextBuilder.toString()
     }
 
-    override fun onCreateAfterSuper(savedInstanceState: Bundle?) {
-        super.onCreateAfterSuper(savedInstanceState)
-
-    }
-
 
     fun overridePendingTransitionOpen() {
         getActivity().overridePendingTransition(R.anim.activity_open_enter, R.anim.activity_open_exit)

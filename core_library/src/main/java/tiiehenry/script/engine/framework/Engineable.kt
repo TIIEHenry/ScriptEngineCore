@@ -35,5 +35,5 @@ interface Engineable {
 
 
     fun init(globalAlias: String)
-    fun destory()
+    fun destroy()
 }

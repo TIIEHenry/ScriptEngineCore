@@ -129,27 +129,6 @@ interface ScriptContext<T : ScriptEngine> {
 		notifyShowToast(a.toString())
 	}
 
-	/* fun printi(id: Int) {
-		 notifyShowToast(getContext().getString(id))
-		 logi("js", getContext().getString(id))
-	 }
-
-	 fun printi(a: Any?) {
-		 notifyShowToast(a.toString())
-		 logi("js", a.toString())
-	 }
-
-	 fun printe(id: Int) {
-		 notifyShowToast(getContext().getString(id))
-		 loge("js", getContext().getString(id))
-	 }
-
-	 fun printe(a: Any?) {
-		 notifyShowToast(a.toString())
-		 loge("js", a.toString())
-	 }
-
- */
 	fun toast(text: String) {
 		val now = System.currentTimeMillis()
 		if (now - lastShow > 1000) {
@@ -160,7 +139,7 @@ interface ScriptContext<T : ScriptEngine> {
 			toastbuilder.append(text)
 		}
 		lastShow = now
-		Toast.makeText(getContext(), toastbuilder.toString(), Toast.LENGTH_LONG).show()
+		Toast.makeText(getContext(), toastbuilder.toString(), Toast.LENGTH_SHORT).show()
 	}
 
 	fun notifyShowToast(text: String) {

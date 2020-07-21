@@ -43,7 +43,7 @@ abstract class ScriptActivityX<A : Activity, T : ScriptEngine> : AppCompatActivi
 
     override fun onDestroy() {
         super.onDestroy()
-        engine.destory()
+        engine.destroy()
     }
 
     override fun finish() {
