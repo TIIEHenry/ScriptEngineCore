@@ -1,4 +1,4 @@
-package tiiehenry.script.wrapper.engine.lang
+package tiiehenry.script.wrapper.framework.lang
 
 interface IVariable<V, T> {
     val value: V

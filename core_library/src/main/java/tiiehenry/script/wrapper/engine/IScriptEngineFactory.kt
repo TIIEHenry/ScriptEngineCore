@@ -1,7 +1,7 @@
-package tiiehenry.script.wrapper
+package tiiehenry.script.wrapper.engine
 
 
-interface IScriptEngineFactory<E:IScriptEngine<V, T>,V, T> {
+interface IScriptEngineFactory<E: IScriptEngine<V, T>,V, T> {
     /**
      * engine name
      */

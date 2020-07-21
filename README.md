@@ -35,7 +35,7 @@ ScriptWrapper复现了JDK中的ScriptEngine，将各种引擎与App代码分离�
 通过编写一个通用的中间层(Wrapper)，将各种引擎与App代码分离，而App与Wrapper对接
 
 
-|  Level(层次结构)  |
+|  层次结构  |
 |  :----:  |
 |  App代码层  |
 |  中间层(Wrapper)  |
@@ -46,6 +46,7 @@ ScriptWrapper复现了JDK中的ScriptEngine，将各种引擎与App代码分离�
 |  :----:  |  :----:  |
 |  bridge  |  脚本语言与Java的桥梁  |
 |  eval |  代码执行脚本语言  |
+| lang | 基础类 |
 |  internal |  通用的内置方法  |
 
 

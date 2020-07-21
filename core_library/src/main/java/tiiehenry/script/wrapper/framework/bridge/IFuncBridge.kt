@@ -1,7 +1,7 @@
-package tiiehenry.script.wrapper.engine.bridge
+package tiiehenry.script.wrapper.framework.bridge
 
-import tiiehenry.script.wrapper.IScriptContext
-import tiiehenry.script.wrapper.engine.lang.IFunction
+import tiiehenry.script.wrapper.engine.IScriptContext
+import tiiehenry.script.wrapper.framework.lang.IFunction
 
 /**
  * T var type

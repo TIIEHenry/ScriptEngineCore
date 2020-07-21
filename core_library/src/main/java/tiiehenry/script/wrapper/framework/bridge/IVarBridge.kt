@@ -1,6 +1,6 @@
-package tiiehenry.script.wrapper.engine.bridge
+package tiiehenry.script.wrapper.framework.bridge
 
-import tiiehenry.script.wrapper.engine.lang.IVariable
+import tiiehenry.script.wrapper.framework.lang.IVariable
 
 interface IVarBridge<V, T/*, S : ScriptEngine*/> : IBridge<IVariable<V, T>> {
 

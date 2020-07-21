@@ -1,7 +1,7 @@
-package tiiehenry.script.wrapper.engine.evaluate
+package tiiehenry.script.wrapper.framework.evaluate
 
-import tiiehenry.script.wrapper.IScriptContext
-import tiiehenry.script.wrapper.engine.lang.IVariable
+import tiiehenry.script.wrapper.engine.IScriptContext
+import tiiehenry.script.wrapper.framework.lang.IVariable
 
 interface IEvaluator<V, T, S> {
     val context: IScriptContext

@@ -1,8 +1,8 @@
-package tiiehenry.script.wrapper
+package tiiehenry.script.wrapper.engine
 
-import tiiehenry.script.wrapper.engine.bridge.IFuncBridge
-import tiiehenry.script.wrapper.engine.bridge.IVarBridge
-import tiiehenry.script.wrapper.engine.evaluate.IEvaluator
+import tiiehenry.script.wrapper.framework.bridge.IFuncBridge
+import tiiehenry.script.wrapper.framework.bridge.IVarBridge
+import tiiehenry.script.wrapper.framework.evaluate.IEvaluator
 import java.io.File
 import java.io.Reader
 

@@ -1,6 +1,6 @@
-package tiiehenry.script.wrapper.engine.internal
+package tiiehenry.script.wrapper.framework.internal
 
-import tiiehenry.script.wrapper.IScriptEngine
+import tiiehenry.script.wrapper.engine.IScriptEngine
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader

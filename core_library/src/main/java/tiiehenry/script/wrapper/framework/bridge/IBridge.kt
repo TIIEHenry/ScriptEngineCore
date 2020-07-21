@@ -1,4 +1,4 @@
-package tiiehenry.script.wrapper.engine.bridge
+package tiiehenry.script.wrapper.framework.bridge
 
 interface IBridge<S> {
 

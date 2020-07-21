@@ -1,7 +1,7 @@
-package tiiehenry.script.wrapper.engine.internal
+package tiiehenry.script.wrapper.framework.internal
 
-import tiiehenry.script.wrapper.IScriptContext
-import tiiehenry.script.wrapper.IScriptEngine
+import tiiehenry.script.wrapper.engine.IScriptContext
+import tiiehenry.script.wrapper.engine.IScriptEngine
 import java.io.File
 import java.io.FileNotFoundException
 
