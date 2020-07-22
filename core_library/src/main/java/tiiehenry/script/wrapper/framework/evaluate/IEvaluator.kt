@@ -5,7 +5,7 @@ import tiiehenry.script.wrapper.framework.lang.IVariable
 
 interface IEvaluator<V, T, S> {
     val context: IScriptContext
-    fun eval(input: S, scriptName: String? = null, lineNumber: Int = 0): IVariable<V, T>?
+    fun eval(input: S, scriptName: String? = null, lineNumber: Int = 1): IVariable<V, T>?
 
 //    fun eval(input: S, type: T? = null, scriptName: String? = null, lineNumber: Int = 0): IVariable<V, T>?
 //
@@ -13,7 +13,7 @@ interface IEvaluator<V, T, S> {
 //        return eval(input, null, scriptName, lineNumber)
 //    }
 
-    fun evalSafely(input: S, scriptName: String?=null, lineNumber: Int = 0): IVariable<V, T>? {
+    fun evalSafely(input: S, scriptName: String?=null, lineNumber: Int = 1): IVariable<V, T>? {
         try {
             return eval(input, scriptName, lineNumber)
         } catch (e: Exception) {

@@ -11,5 +11,7 @@ interface IPrinter<V, T> {
         context.output.println()
     }
 
-    fun print(msg: Any?)
+    fun print(msg: Any?){
+        context.output.print(msg.toString())
+    }
 }
