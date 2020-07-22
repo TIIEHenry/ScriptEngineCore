@@ -1,5 +1,6 @@
 buildscript {
 
+    ext.kotlin_version = "1.3.50"
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public/' } //jcenter和central
         maven { url 'https://maven.aliyun.com/repository/google/' }
@@ -33,10 +34,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-ext {
-    compileSdkVersion = 29
-    targetSdkVersion = 29
-
-    //googleServiceVersion = "15.0.2"
 }

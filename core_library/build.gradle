@@ -1,6 +1,9 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
+group "tiiehenry.script.wrapper"
+version "1.0"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
