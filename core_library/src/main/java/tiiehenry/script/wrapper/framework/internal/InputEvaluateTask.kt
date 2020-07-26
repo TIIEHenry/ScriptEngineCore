@@ -10,7 +10,7 @@ abstract class InputEvaluateTask<V, T>(private val input: InputStream, private v
         override fun run() {
             try {
                 val br = BufferedReader(InputStreamReader(input))
-                var str: String? = ""
+                var str: String?
                 var lineNo = 0
                 do {
                     lineNo++
