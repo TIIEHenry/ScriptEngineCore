@@ -1,10 +1,9 @@
 package tiiehenry.script.wrapper.engine
 
-import tiiehenry.script.wrapper.engine.IScriptEngineFactory
-
 
 interface IScriptEngineManager {
     fun addEngineFactory(engineFactory: IScriptEngineFactory<*, *, *>)
+    
     fun removeEngineFactory(engineFactory: IScriptEngineFactory<*, *, *>)
 
     fun getEngineFactoryByName(name: String): IScriptEngineFactory<*, *, *>?
