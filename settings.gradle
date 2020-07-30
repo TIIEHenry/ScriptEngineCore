@@ -1,8 +1,1 @@
-rootProject.name = "ScriptWrapper"
-
-include ':core_library'
-
-//rootProject.children.each {
-//    /**设置构建脚本文件名*/
-//    it.buildFileName = "wrapper-"+it.name + '.gradle'
-//}
+rootProject.name = "core_library"
