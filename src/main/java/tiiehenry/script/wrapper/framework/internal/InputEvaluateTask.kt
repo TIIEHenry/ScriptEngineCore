@@ -15,7 +15,9 @@ abstract class InputEvaluateTask<V, T>(private val input: InputStream, private v
                 do {
                     lineNo++
                     str = br.readLine()
-                    engine.stringEvaluator.evalSafely(str, null, lineNo)
+                    if (str != null) {
+                        engine.stringEvaluator.evalSafely(str, null, lineNo)
+                    }
                 } while (!shouldFinish && !shouldFinish(str))
 //            br.close()
             }catch (e:Exception){

@@ -32,7 +32,7 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 group "tiiehenry.script.wrapper"
-version "1.2.1"
+version "1.2.3"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
